@@ -24,12 +24,12 @@ dependencies {
         testFramework(org.jetbrains.intellij.platform.gradle.TestFrameworkType.Platform)
 
         // Add plugin dependencies for compilation here:
-
         @Suppress("UnstableApiUsage")
         composeUI()
 
         bundledPlugin("com.intellij.modules.json")
         bundledPlugin("org.jetbrains.plugins.yaml")
+        bundledPlugin("PythonCore")
     }
 }
 

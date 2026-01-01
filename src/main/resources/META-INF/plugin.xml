@@ -13,8 +13,7 @@
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/best-practices-for-listing.html#plugin-description -->
     <description><![CDATA[
-        Just a utility feature for EzCord.<br>
-        <em>most HTML tags may be used</em>
+        Just a utility feature for EzCord.
     ]]></description>
 
     <!-- Product and plugin compatibility requirements.
@@ -28,7 +27,33 @@
     <!-- Extensions defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow id="MyToolWindow" factoryClass="me.geckotv.ezcordutils.MyToolWindowFactory"
-                    icon="AllIcons.Toolwindows.ToolWindowPalette"/>
+        <toolWindow id="Language Keys" factoryClass="me.geckotv.ezcordutils.language.LanguageKeyToolWindowFactory"
+                    icon="AllIcons.Toolwindows.Documentation"
+                    anchor="right"/>
+
+        <!-- Settings -->
+        <projectConfigurable
+            parentId="tools"
+            instance="me.geckotv.ezcordutils.settings.EzCordSettingsConfigurable"
+            id="me.geckotv.ezcordutils.settings"
+            displayName="EzCord Settings"/>
+
+        <!-- Language Key Autocomplete -->
+        <completion.contributor
+            language="Python"
+            implementationClass="me.geckotv.ezcordutils.language.LanguageKeyCompletionContributor"
+            order="first"/>
+
+
+        <lang.documentationProvider
+            language="Python"
+            implementationClass="me.geckotv.ezcordutils.language.LanguageDocumentationProvider"
+            order="first"/>
     </extensions>
+
+    <projectListeners>
+        <listener
+            class="me.geckotv.ezcordutils.language.LanguageFileEditorListener"
+            topic="com.intellij.openapi.fileEditor.FileEditorManagerListener"/>
+    </projectListeners>
 </idea-plugin>
