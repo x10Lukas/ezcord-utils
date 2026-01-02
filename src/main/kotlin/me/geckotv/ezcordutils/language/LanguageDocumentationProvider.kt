@@ -5,6 +5,7 @@ import com.intellij.openapi.editor.Editor
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.jetbrains.python.psi.PyStringLiteralExpression
+import me.geckotv.ezcordutils.utils.LanguageUtils
 
 /**
  * Provides documentation for language keys in Python files.
@@ -14,38 +15,68 @@ class LanguageDocumentationProvider : AbstractDocumentationProvider() {
 
     @Suppress("UnstableApiUsage")
     override fun generateDoc(element: PsiElement?, originalElement: PsiElement?): String? {
-        println("[DEBUG] generateDoc called! element=$element, originalElement=$originalElement")
+        val pyString = when {
+            element is PyStringLiteralExpression -> element
+            originalElement is PyStringLiteralExpression -> originalElement
+            else -> { return null }
+        }
 
-        if (element !is PyStringLiteralExpression) {
-            println("[DEBUG] Element is not PyStringLiteralExpression, it's: ${element?.javaClass?.name}")
+        val stringValue = pyString.stringValue.trim()
+
+        if (stringValue.isBlank()) {
             return null
         }
 
-        println("[DEBUG] Found PyStringLiteralExpression!")
-        val project = element.project
-        val stringValue = element.stringValue
-        println("[DEBUG] String value: '$stringValue'")
+        val resolver = LanguageResolver(pyString.project)
+        val filePrefix = LanguageUtils().getFilePrefix(pyString.containingFile.name)
 
-        // Check if the string looks like a language key (contains a dot)
-        if (!stringValue.contains(".")) {
-            println("[DEBUG] String doesn't contain dot, skipping")
-            return null
+        // Extract all language keys from strings with placeholders like {container.title}
+        val keyPattern = Regex("""[{]([a-zA-Z0-9_.]+)[}]""")
+        val keyMatches = keyPattern.findAll(stringValue).toList()
+
+        if (keyMatches.isNotEmpty()) {
+            // Multiple keys found in format {key1}\n{key2}
+            val translations = mutableMapOf<String, String>()
+
+            for (match in keyMatches) {
+                val key = match.groupValues[1]
+                var translatedText = resolver.resolve(key)
+                var finalKey = key
+
+                if (translatedText == null) {
+                    finalKey = "$filePrefix.$key"
+                    translatedText = resolver.resolve(finalKey)
+                }
+
+                if (translatedText != null) {
+                    translations[finalKey] = translatedText
+                }
+            }
+
+            if (translations.isEmpty()) {
+                return null
+            }
+
+            if (translations.size == 1) {
+                val (singleKey, singleTranslation) = translations.entries.first()
+                return buildDocumentation(singleKey, singleTranslation)
+            }
+
+            return buildMultiDocumentation(translations)
         }
 
-        println("[DEBUG] Resolving language key: '$stringValue'")
-        // Resolve the language key
-        val resolver = LanguageResolver(project)
-        val translatedText = resolver.resolve(stringValue)
+        var translatedText = resolver.resolve(stringValue)
+        var finalKey = stringValue
 
         if (translatedText == null) {
-            println("[DEBUG] Could not resolve key '$stringValue'")
-            return null
+            finalKey = "$filePrefix.$stringValue"
+            translatedText = resolver.resolve(finalKey)
+            if (translatedText == null) {
+                return null
+            }
         }
 
-        println("[DEBUG] ✅ Resolved language key '$stringValue' to '$translatedText'")
-
-        // Format the documentation
-        return buildDocumentation(stringValue, translatedText)
+        return buildDocumentation(finalKey, translatedText)
     }
 
     override fun getCustomDocumentationElement(
@@ -54,12 +85,24 @@ class LanguageDocumentationProvider : AbstractDocumentationProvider() {
         contextElement: PsiElement?,
         targetOffset: Int
     ): PsiElement? {
-        // Return the element if it's a Python string literal
-        return if (contextElement is PyStringLiteralExpression) contextElement else null
+        // Check if we're hovering over a Python string or inside one
+        val element = when {
+            contextElement is PyStringLiteralExpression -> {
+                contextElement
+            }
+            contextElement?.parent is PyStringLiteralExpression -> {
+                contextElement.parent as PyStringLiteralExpression
+            }
+            else -> {
+                null
+            }
+        }
+
+        return element
     }
 
     /**
-     * Builds the HTML documentation to display.
+     * Builds the HTML documentation to display for a single key.
      */
     private fun buildDocumentation(key: String, translation: String): String {
         return buildString {
@@ -76,6 +119,28 @@ class LanguageDocumentationProvider : AbstractDocumentationProvider() {
     }
 
     /**
+     * Builds the HTML documentation to display for multiple keys.
+     */
+    private fun buildMultiDocumentation(translations: Map<String, String>): String {
+        return buildString {
+            append("<div class='definition'><pre>")
+            append("<b>Language Keys Found:</b> ${translations.size}")
+            append("</pre></div>")
+            append("<div class='content'>")
+
+            translations.forEach { (key, translation) ->
+                append("<hr style='margin: 8px 0; border: 0; border-top: 1px solid #ccc;'>")
+                append("<p><b>Key:</b> $key</p>")
+                append("<p style='margin-left: 10px; font-style: italic;'>")
+                append(escapeHtml(translation))
+                append("</p>")
+            }
+
+            append("</div>")
+        }
+    }
+
+    /**
      * Escapes HTML special characters.
      */
     private fun escapeHtml(text: String): String {
@@ -87,4 +152,3 @@ class LanguageDocumentationProvider : AbstractDocumentationProvider() {
             .replace("'", "&#39;")
     }
 }
-

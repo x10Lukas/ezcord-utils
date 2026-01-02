@@ -5,6 +5,7 @@ import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.patterns.PlatformPatterns
 import com.intellij.util.ProcessingContext
 import com.jetbrains.python.psi.PyStringLiteralExpression
+import me.geckotv.ezcordutils.utils.LanguageUtils
 
 /**
  * Provides autocomplete for language keys in Python files.
@@ -33,7 +34,7 @@ class LanguageKeyCompletionProvider : CompletionProvider<CompletionParameters>()
         println("[DEBUG Autocomplete] File: ${file.name}")
 
         // Get the file prefix (e.g., "welcome" from "welcome.py")
-        val filePrefix = getFilePrefix(file.name)
+        val filePrefix = LanguageUtils().getFilePrefix(file.name)
         println("[DEBUG Autocomplete] File prefix: $filePrefix")
 
         // Get all available language keys
@@ -74,21 +75,6 @@ class LanguageKeyCompletionProvider : CompletionProvider<CompletionParameters>()
         }
 
         println("[DEBUG Autocomplete] Added ${relevantKeys.size} completion items")
-    }
-
-    /**
-     * Extracts the prefix from a filename (e.g., "welcome" from "welcome.py").
-     * Handles formats like "welcome.py", "welcome.container.py", etc.
-     */
-    private fun getFilePrefix(filename: String): String? {
-        if (!filename.endsWith(".py")) return null
-
-        val nameWithoutExtension = filename.removeSuffix(".py")
-
-        // If the filename contains dots, take everything before the last component
-        // e.g., "welcome.container.py" -> "welcome.container"
-        // e.g., "welcome.py" -> "welcome"
-        return nameWithoutExtension.ifEmpty { null }
     }
 }
 
