@@ -44,6 +44,9 @@
     <!-- Extensions defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
+        <!-- Live Templates -->
+        <defaultLiveTemplates file="/liveTemplates/EzCord.xml"/>
+
         <toolWindow id="Language Keys" factoryClass="me.geckotv.ezcordutils.language.LanguageKeyToolWindowFactory"
                     icon="AllIcons.Toolwindows.Documentation"
                     anchor="right"/>

@@ -1,7 +1,84 @@
-# IntelliJ Platform Plugin Template
+# EzCord Utils - IntelliJ Plugin
 
 [![Twitter Follow](https://img.shields.io/badge/follow-%40JBPlatform-1DA1F2?logo=twitter)](https://twitter.com/JBPlatform)
 [![Developers Forum](https://img.shields.io/badge/JetBrains%20Platform-Join-blue)][jb:forum]
+
+Ein leistungsstarkes IntelliJ-Plugin zur Optimierung der Discord-Bot-Entwicklung mit [EzCord](https://ezcord.readthedocs.io/en/latest/).
+
+## ✨ Features
+
+### 🔤 Language Key Features
+- **Smart Language Key Autocomplete** - Intelligente Vorschläge für verfügbare Language Keys während der Eingabe
+- **Quick Documentation** - Zeigt Übersetzungen beim Hover über Language Keys in Echtzeit an
+- **One-Click Navigation** - Direkter Sprung zu Language-Definitionen in YAML-Dateien via Gutter Icons
+- **File Prefix Detection** - Automatische Auflösung von Keys mit dateibasierten Präfixen
+
+### ⚡ Live Templates
+Mit den integrierten Live Templates können Sie schnell Code-Snippets für discord.py und EzCord einfügen. Geben Sie einfach die Abkürzung ein und drücken Sie `Tab`.
+
+#### Verfügbare Templates:
+
+| Abkürzung | Beschreibung | Verwendung |
+|-----------|--------------|------------|
+| `ezcordbot` | Vollständiges EzCord Bot Setup | Erstellt eine komplette Bot-Struktur mit `ezcord.Bot`, async setup_hook, cog loading und main function |
+| `ezcordcog` | EzCord Cog Template | Erstellt eine neue Cog-Klasse mit setup function |
+| `ezcordslash` | Slash Command | Fügt einen Discord Slash Command hinzu |
+| `ezcordevent` | Event Listener | Erstellt einen Event Listener für Cogs |
+| `ezcordmodal` | Discord Modal | Erstellt ein Discord Modal mit TextInput |
+| `ezcordview` | Discord View mit Button | Erstellt eine View-Klasse mit Button-Callback |
+
+#### Beispiel: `ezcordbot` Template
+
+```python
+import asyncio
+
+import discord
+
+import ezcord
+
+
+class Bot(ezcord.Bot):
+    def __init__(self):
+        super().__init__(intents=discord.Intents.default())
+
+    async def setup_hook(self):
+        await super().setup_hook()
+        await self.tree.sync()
+
+
+async def main():
+    async with Bot() as bot:
+        bot.add_help_command()
+        bot.load_cogs("cogs")  # Load all cogs in the "cogs" folder
+        await bot.start("TOKEN")  # Replace with your bot token
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
+```
+
+## 🚀 Installation
+
+1. Öffnen Sie IntelliJ IDEA / PyCharm
+2. Gehen Sie zu `Settings` → `Plugins`
+3. Suchen Sie nach "EzCord Utils"
+4. Klicken Sie auf `Install`
+
+Oder laden Sie das Plugin manuell von der [JetBrains Marketplace](https://plugins.jetbrains.com) herunter.
+
+## 📖 Verwendung
+
+### Live Templates verwenden
+1. Öffnen Sie eine Python-Datei
+2. Geben Sie eine der Template-Abkürzungen ein (z.B. `ezcordbot`)
+3. Drücken Sie `Tab`
+4. Navigieren Sie mit `Tab` durch die Platzhalter und füllen Sie die Werte aus
+
+### Language Keys verwenden
+1. Konfigurieren Sie den Language-Ordner in `Settings` → `Tools` → `EzCord Settings`
+2. Beginnen Sie `bot.t("` in Ihrem Python-Code zu schreiben
+3. Erhalten Sie automatische Vorschläge für verfügbare Keys
+4. Klicken Sie auf das Gutter-Icon, um zur Definition zu springen
 
 ## Plugin template structure
 
