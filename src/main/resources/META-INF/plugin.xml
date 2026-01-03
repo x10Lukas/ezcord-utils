@@ -45,8 +45,8 @@
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
         <!-- Live Templates -->
-        <defaultLiveTemplates file="/liveTemplates/Discord.py.xml"/>
-        <defaultLiveTemplates file="/liveTemplates/Py-Cord.xml"/>
+        <defaultLiveTemplates file="/liveTemplates/discord.py.xml"/>
+        <defaultLiveTemplates file="/liveTemplates/py-cord.xml"/>
 
         <toolWindow id="Language Keys" factoryClass="me.geckotv.ezcordutils.language.LanguageKeyToolWindowFactory"
                     icon="AllIcons.Toolwindows.Documentation"

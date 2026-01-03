@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templateSet group="Discord.py>">
+
+    <!-- Bot Main -->
+    <template name="ezpy-main" value="import asyncio&#10;import discord&#10;import ezcord&#10;&#10;&#10;class Bot(ezcord.Bot):&#10;    def __init__(self):&#10;        super().__init__(intents=discord.Intents.$INTENTS$())&#10;&#10;    async def setup_hook(self):&#10;        await super().setup_hook()&#10;        await self.tree.sync()&#10;&#10;&#10;async def main():&#10;    async with Bot() as bot:&#10;        bot.add_help_command()&#10;        bot.load_cogs()&#10;        await bot.start()&#10;&#10;&#10;if __name__ == &quot;__main__&quot;:&#10;    asyncio.run(main())&#10;$END$" description="discord.py Bot Setup with EzCord" toReformat="true" toShortenFQNames="true">
+        <variable name="INTENTS" expression="" defaultValue="&quot;default&quot;" alwaysStopAt="true" />
+        <context>
+            <option name="Python" value="true" />
+        </context>
+    </template>
+
+    <!-- Cog Template -->
+    <template name="ezpy-cog" value="import discord&#10;import ezcord&#10;from discord import app_commands&#10;&#10;&#10;class $COG_NAME$(ezcord.Cog, emoji=&quot;$EMOJI$&quot;):&#10;    def __init__(self, bot: ezcord.Bot):&#10;        self.bot = bot&#10;&#10;    @app_commands.command(description=&quot;$DESCRIPTION$&quot;)&#10;    async def $COMMAND_NAME$(self, interaction: discord.Interaction):&#10;        await interaction.response.send_message(&quot;$RESPONSE$&quot;)&#10;&#10;&#10;async def setup(bot: ezcord.Bot):&#10;    await bot.add_cog($COG_NAME$(bot))&#10;$END$" description="discord.py Cog with ezcord" toReformat="true" toShortenFQNames="true">
+        <variable name="COG_NAME" expression="" defaultValue="&quot;Base&quot;" alwaysStopAt="true" />
+        <variable name="EMOJI" expression="" defaultValue="&quot;👋🏼&quot;" alwaysStopAt="true" />
+        <variable name="COMMAND_NAME" expression="" defaultValue="&quot;hey&quot;" alwaysStopAt="true" />
+        <variable name="DESCRIPTION" expression="" defaultValue="&quot;Say hello!&quot;" alwaysStopAt="true" />
+        <variable name="RESPONSE" expression="" defaultValue="&quot;Hello Everyone!&quot;" alwaysStopAt="true" />
+        <context>
+            <option name="Python" value="true" />
+        </context>
+    </template>
+
+</templateSet>
