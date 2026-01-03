@@ -24,4 +24,41 @@
         </context>
     </template>
 
+    <!-- Button Template -->
+    <template name="ez-button" value="class $BUTTON_NAME$(discord.ui.Button):&#10;    def __init__(self):&#10;        super().__init__(label=&quot;$LABEL$&quot;, emoji=&quot;$EMOJI$&quot;, style=discord.ButtonStyle.$STYLE$)&#10;&#10;    async def callback(self, interaction: ezcord.EzContext):&#10;        await interaction.respond(f&quot;$RESPONSE$&quot;)&#10;$END$" description="[py-cord] Button with ezcord" toReformat="true" toShortenFQNames="true">
+        <variable name="BUTTON_NAME" expression="" defaultValue="&quot;Button&quot;" alwaysStopAt="true" />
+        <variable name="LABEL" expression="" defaultValue="&quot;Welcome&quot;" alwaysStopAt="true" />
+        <variable name="EMOJI" expression="" defaultValue="&quot;👋🏼&quot;" alwaysStopAt="true" />
+        <variable name="STYLE" expression="" defaultValue="&quot;gray&quot;" alwaysStopAt="true" />
+        <variable name="RESPONSE" expression="" defaultValue="&quot;👋🏼 Welcome {interaction.user.name}!&quot;" alwaysStopAt="true" />
+        <context>
+            <option name="Python" value="true" />
+        </context>
+    </template>
+
+    <!-- Modal Template -->
+    <template name="ez-modal" value="class $MODAL_NAME$(discord.ui.DesignerModal):&#10;    def __init__(self):&#10;        super().__init__(&#10;            discord.ui.Label(&#10;                &quot;$LABEL_TEXT$&quot;,&#10;                discord.ui.InputText(&#10;                    placeholder=&quot;$PLACEHOLDER$&quot;,&#10;                    required=$REQUIRED$,&#10;                ),&#10;                description=&quot;$DESCRIPTION$&quot;,&#10;            ),&#10;            title=&quot;$TITLE$&quot;&#10;        )&#10;&#10;    async def callback(self, interaction: ezcord.EzContext):&#10;        typed = self.children[0].item.value&#10;        await interaction.respond(f&quot;$RESPONSE$&quot;)&#10;$END$" description="[py-cord] Modal with ezcord" toReformat="true" toShortenFQNames="true">
+        <variable name="MODAL_NAME" expression="" defaultValue="&quot;Modal&quot;" alwaysStopAt="true" />
+        <variable name="LABEL_TEXT" expression="" defaultValue="&quot;Label&quot;" alwaysStopAt="true" />
+        <variable name="PLACEHOLDER" expression="" defaultValue="&quot;This is a placeholder&quot;" alwaysStopAt="true" />
+        <variable name="REQUIRED" expression="" defaultValue="True" alwaysStopAt="true" />
+        <variable name="DESCRIPTION" expression="" defaultValue="&quot;This is a description&quot;" alwaysStopAt="true" />
+        <variable name="TITLE" expression="" defaultValue="&quot;Just a Title&quot;" alwaysStopAt="true" />
+        <variable name="RESPONSE" expression="" defaultValue="&quot;You typed: {typed}&quot;" alwaysStopAt="true" />
+        <context>
+            <option name="Python" value="true" />
+        </context>
+    </template>
+
+    <!-- Select Template -->
+    <template name="ez-select" value="class $SELECT_NAME$(discord.ui.Select):&#10;    def __init__(self):&#10;&#10;        options = []&#10;&#10;        super().__init__(&#10;            placeholder=&quot;$PLACEHOLDER$&quot;,&#10;            options=options,&#10;            required=$REQUIRED$&#10;        )&#10;&#10;    async def callback(self, interaction: ezcord.EzContext):&#10;        selected = self.values[0]&#10;        await interaction.respond(f&quot;$RESPONSE$&quot;)&#10;$END$" description="[py-cord] Select with ezcord" toReformat="true" toShortenFQNames="true">
+        <variable name="SELECT_NAME" expression="" defaultValue="&quot;Select&quot;" alwaysStopAt="true" />
+        <variable name="PLACEHOLDER" expression="" defaultValue="&quot;This is a Select&quot;" alwaysStopAt="true" />
+        <variable name="REQUIRED" expression="" defaultValue="True" alwaysStopAt="true" />
+        <variable name="RESPONSE" expression="" defaultValue="&quot;You selected: {selected}&quot;" alwaysStopAt="true" />
+        <context>
+            <option name="Python" value="true" />
+        </context>
+    </template>
+
 </templateSet>
