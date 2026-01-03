@@ -1,5 +1,7 @@
 # EzCord Utils - IntelliJ Plugin
 
+[<iframe width="245px" height="48px" src="https://plugins.jetbrains.com/embeddable/install/29591"></iframe>
+
 A powerful IntelliJ plugin to streamline Discord bot development with [EzCord](https://ezcord.readthedocs.io/en/latest/).
 
 ## ✨ Features
@@ -15,12 +17,18 @@ With the integrated Live Templates, you can quickly insert code snippets for py-
 
 #### Available Templates:
 
-| Abbreviation  | Description                | Usage                                                |
-|---------------|----------------------------|------------------------------------------------------|
-| `ez-main`     | [py-cord] Main with ezcord | Creates a Complete Main setup with ezcord integrated |
-| `ez-cog`      | [py-cord] Cog with ezcord  | Creates a Complete Cog setup with ezcord integrated  |
-| `ezpy-main`   | [d.py] Main with ezcord    | Creates a Complete Main setup with ezcord integrated |
-| `ezpy-cog`    | [d.py] Cog with ezcord     | Creates a Complete Cog setup with ezcord integrated  |
+| Abbreviation  | Description                  | Usage                                                 |
+|---------------|------------------------------|-------------------------------------------------------|
+| `ez-main`     | [py-cord] Main with ezcord   | Creates a Complete Main setup with ezcord integrated  |
+| `ez-cog`      | [py-cord] Cog with ezcord    | Creates a Complete Cog setup with ezcord integrated   |
+| `ez-button`   | [py-cord] Button with ezcord | Creates a discord.ui.Button with ezcord callback      |
+| `ez-modal`    | [py-cord] Modal with ezcord  | Creates a discord.ui.DesignerModal with ezcord        |
+| `ez-select`   | [py-cord] Select with ezcord | Creates a discord.ui.Select with ezcord callback      |
+| `ezpy-main`   | [d.py] Main with ezcord      | Creates a Complete Main setup with ezcord integrated  |
+| `ezpy-cog`    | [d.py] Cog with ezcord       | Creates a Complete Cog setup with ezcord integrated   |
+| `ezpy-button` | [d.py] Button with ezcord    | Creates a discord.ui.Button with interaction callback |
+| `ezpy-modal`  | [d.py] Modal with ezcord     | Creates a discord.ui.Modal with on_submit method      |
+| `ezpy-select` | [d.py] Select with ezcord    | Creates a discord.ui.Select with interaction callback |
 
 #### Example: `ez-main` Template
 
