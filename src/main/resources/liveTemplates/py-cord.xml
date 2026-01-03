@@ -2,7 +2,7 @@
 <templateSet group="Py-Cord">
 
     <!-- Bot Main -->
-    <template name="ez-main" value="import discord&#10;import ezcord&#10;&#10;class Bot(ezcord.Bot):&#10;    def __init__(self):&#10;        super().__init__(intents=discord.Intents.$INTENTS$(), language=&quot;$LANGUAGE$&quot;)&#10;&#10;        self.load_cogs()&#10;        self.add_help_command()&#10;        self.add_status_changer(&#10;            &quot;$STATUS_TEXT$&quot;,&#10;            discord.Game(&quot;$GAME_TEXT$&quot;),&#10;        )&#10;&#10;&#10;if __name__ == &quot;__main__&quot;:&#10;    bot = Bot()&#10;    bot.run()&#10;$END$" description="Py-Cord main file with ezcord" toReformat="true" toShortenFQNames="true">
+    <template name="ez-main" value="import discord&#10;import ezcord&#10;&#10;class Bot(ezcord.Bot):&#10;    def __init__(self):&#10;        super().__init__(intents=discord.Intents.$INTENTS$(), language=&quot;$LANGUAGE$&quot;)&#10;&#10;        self.load_cogs()&#10;        self.add_help_command()&#10;        self.add_status_changer(&#10;            &quot;$STATUS_TEXT$&quot;,&#10;            discord.Game(&quot;$GAME_TEXT$&quot;),&#10;        )&#10;&#10;&#10;if __name__ == &quot;__main__&quot;:&#10;    bot = Bot()&#10;    bot.run()&#10;$END$" description="[py-cord] Main with ezcord" toReformat="true" toShortenFQNames="true">
         <variable name="INTENTS" expression="" defaultValue="&quot;default&quot;" alwaysStopAt="true" />
         <variable name="LANGUAGE" expression="" defaultValue="&quot;en&quot;" alwaysStopAt="true" />
         <variable name="STATUS_TEXT" expression="" defaultValue="&quot;Ezcord&quot;" alwaysStopAt="true" />
@@ -13,7 +13,7 @@
     </template>
 
     <!-- Cog Template -->
-    <template name="ez-cog" value="import discord&#10;import ezcord&#10;from discord.commands import slash_command&#10;&#10;&#10;class $COG_NAME$(ezcord.Cog, emoji=&quot;$EMOJI$&quot;):&#10;    def __init__(self, bot: ezcord.Bot):&#10;        self.bot = bot&#10;    &#10;    @slash_command(description=&quot;$DESCRIPTION$&quot;)&#10;    async def $COMMAND_NAME$(self, ctx: discord.ApplicationContext):&#10;        await ctx.respond(&quot;$RESPONSE$&quot;)&#10;&#10;&#10;def setup(bot: ezcord.Bot):&#10;    bot.add_cog($COG_NAME$(bot))&#10;$END$" description="Py-Cord Cog with ezcord" toReformat="true" toShortenFQNames="true">
+    <template name="ez-cog" value="import discord&#10;import ezcord&#10;from discord.commands import slash_command&#10;&#10;&#10;class $COG_NAME$(ezcord.Cog, emoji=&quot;$EMOJI$&quot;):&#10;    def __init__(self, bot: ezcord.Bot):&#10;        self.bot = bot&#10;    &#10;    @slash_command(description=&quot;$DESCRIPTION$&quot;)&#10;    async def $COMMAND_NAME$(self, ctx: discord.ApplicationContext):&#10;        await ctx.respond(&quot;$RESPONSE$&quot;)&#10;&#10;&#10;def setup(bot: ezcord.Bot):&#10;    bot.add_cog($COG_NAME$(bot))&#10;$END$" description="[py-cord] Cog with ezcord" toReformat="true" toShortenFQNames="true">
         <variable name="COG_NAME" expression="" defaultValue="&quot;Base&quot;" alwaysStopAt="true" />
         <variable name="EMOJI" expression="" defaultValue="&quot;👋🏼&quot;" alwaysStopAt="true" />
         <variable name="COMMAND_NAME" expression="" defaultValue="&quot;hey&quot;" alwaysStopAt="true" />
